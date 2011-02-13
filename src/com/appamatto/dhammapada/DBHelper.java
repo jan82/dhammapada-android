@@ -4,14 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 	private static final String DB_NAME = "dhp";
-	private static final int DB_VERSION = 5;
+	private static final int DB_VERSION = 8;
 	private static final String DHP_FILE = "dhp.txt";
 
 	private Context context;
@@ -22,16 +21,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 
 	public void createTables(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE chapters (_id INTEGER PRIMARY KEY AUTOINCREMENT, first, last, title)");
-		db.execSQL("CREATE TABLE verses (_id INTEGER PRIMARY KEY AUTOINCREMENT, first, last, text, bookmarked)");
-	}
-
-	public void insert(SQLiteDatabase db, Chapter chapter) {
-		ContentValues cvs = new ContentValues();
-		cvs.put("first", chapter.range.first);
-		cvs.put("last", chapter.range.last);
-		cvs.put("title", chapter.title);
-		db.insert("chapters", null, cvs);
+		db.execSQL("CREATE TABLE chapters (_id INTEGER PRIMARY KEY AUTOINCREMENT, title)");
+		db.execSQL("CREATE TABLE verses (_id INTEGER PRIMARY KEY AUTOINCREMENT, chapter_id, first, last, text, bookmarked)");
 	}
 
 	public VerseRange parseRange(String line) {
@@ -78,29 +69,19 @@ public class DBHelper extends SQLiteOpenHelper {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					context.getAssets().open(DHP_FILE)));
 			String line;
-			Integer chapterStart = null;
-			String chapterTitle = null;
 			VerseRange range = null;
+			Chapter chapter = null;
 			String text = null;
 			while ((line = reader.readLine()) != null) {
-				String newTitle;
-				if ((newTitle = parseChapter(line)) != null) {
-					if (chapterTitle != null && chapterStart != null
-							&& range != null) {
-						insert(db, new Chapter(chapterStart, range.last,
-								chapterTitle));
-					}
-					chapterTitle = newTitle;
-					chapterStart = null;
+				String title;
+				if ((title = parseChapter(line)) != null) {
+					chapter = new Chapter(title).insert(db);
 					continue;
 				}
 				VerseRange newRange;
 				if ((newRange = parseRange(line)) != null) {
-					if (chapterStart == null) {
-						chapterStart = newRange.first;
-					}
 					if (text != null) {
-						new Verse(range, text).insert(db);
+						new Verse(chapter.id, range, text).insert(db);
 						text = null;
 					}
 					range = newRange;
@@ -112,11 +93,8 @@ public class DBHelper extends SQLiteOpenHelper {
 					text += '\n' + line;
 				}
 			}
-			if (chapterTitle != null && chapterStart != null && range != null) {
-				insert(db, new Chapter(chapterStart, range.last, chapterTitle));
-			}
 			if (text != null) {
-				new Verse(range, text).insert(db);
+				new Verse(chapter.id, range, text).insert(db);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
