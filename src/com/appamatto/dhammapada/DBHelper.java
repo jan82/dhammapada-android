@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 	private static final String DB_NAME = "dhp";
-	private static final int DB_VERSION = 9;
+	private static final int DB_VERSION = 10;
 	private static final String DHP_FILE = "dhp.txt";
 
 	private Context context;
@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public void createTables(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE chapters (_id INTEGER PRIMARY KEY AUTOINCREMENT, title)");
-		db.execSQL("CREATE TABLE verses (_id INTEGER PRIMARY KEY AUTOINCREMENT, chapter_id, first, last, text, bookmarked)");
+		db.execSQL("CREATE TABLE verses (_id INTEGER PRIMARY KEY AUTOINCREMENT, chapter_id, chapter_offset, first, last, text, bookmarked)");
 	}
 
 	public VerseRange parseRange(String line) {
@@ -71,21 +71,25 @@ public class DBHelper extends SQLiteOpenHelper {
 			String line;
 			VerseRange range = null;
 			Chapter chapter = null;
+			int chapterOffset = 0;
 			String text = null;
 			while ((line = reader.readLine()) != null) {
 				String title;
 				if ((title = parseChapter(line)) != null) {
 					if (text != null) {
-						new Verse(chapter.id, range, text).insert(db);
+						new Verse(chapter.id, chapterOffset++, range, text)
+								.insert(db);
 						text = null;
 					}
 					chapter = new Chapter(title).insert(db);
+					chapterOffset = 0;
 					continue;
 				}
 				VerseRange newRange;
 				if ((newRange = parseRange(line)) != null) {
 					if (text != null) {
-						new Verse(chapter.id, range, text).insert(db);
+						new Verse(chapter.id, chapterOffset++, range, text)
+								.insert(db);
 						text = null;
 					}
 					range = newRange;
@@ -98,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				}
 			}
 			if (text != null) {
-				new Verse(chapter.id, range, text).insert(db);
+				new Verse(chapter.id, chapterOffset++, range, text).insert(db);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

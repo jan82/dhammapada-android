@@ -38,6 +38,17 @@ public class HeadingAdapter implements ListAdapter {
 		return new ResolvedPosition(groupPosition, offset - 1);
 	}
 
+	public Integer getFlatPosition(int groupPosition, int memberPosition) {
+		if (groupPosition >= groups.getCount()) {
+			return null;
+		}
+		for (int i = partitions.size() - 1; i < groupPosition; i++) {
+			int size = groups.getGroupSize(i) + partitions.get(i) + 1;
+			partitions.add(size);
+		}
+		return partitions.get(groupPosition) + memberPosition + 1;
+	}
+
 	private int findPartition(int position) {
 		int i = 0;
 		int j = partitions.size();
@@ -181,11 +192,11 @@ public class HeadingAdapter implements ListAdapter {
 
 	private class InferiorDataSetObserver extends DataSetObserver {
 		public void onChanged() {
-			dataSetObservable.notifyChanged();
+			notifyDataSetChanged();
 		}
 
 		public void onInvalidated() {
-			dataSetObservable.notifyInvalidated();
+			notifyDataSetInvalidated();
 		}
 	}
 

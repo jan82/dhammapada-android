@@ -7,13 +7,19 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 
 public class VersesAdapter extends CursorAdapter implements MembersAdapter {
-	public VersesAdapter(Context context, Cursor cursor) {
+	private boolean fullView;
+
+	public VersesAdapter(Context context, Cursor cursor, boolean fullView) {
 		super(context, cursor);
+		this.fullView = fullView;
 	}
 
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		return new FullVerseView(context);
+		if (fullView) {
+			return new FullVerseView(context);
+		}
+		return new BriefVerseView(context);
 	}
 
 	@Override

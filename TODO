@@ -1,12 +1,14 @@
 Features
 
 search view
-favorites view
-  first line + chapter
 send via email
   send atoi link
-legal (with atoi and Thanissaro Bhikkhu info)
-feedback
-chapter headings
 
+req'd
+legal (with atoi and Thanissaro Bhikkhu info)
+feedback dhammapada@appamatto.com
+favorites view
+  first line + chapter
+
+- chapter headings (yay!)
 - remember place (SharedPrefences)
