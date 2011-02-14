@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 	private static final String DB_NAME = "dhp";
-	private static final int DB_VERSION = 8;
+	private static final int DB_VERSION = 9;
 	private static final String DHP_FILE = "dhp.txt";
 
 	private Context context;
@@ -75,6 +75,10 @@ public class DBHelper extends SQLiteOpenHelper {
 			while ((line = reader.readLine()) != null) {
 				String title;
 				if ((title = parseChapter(line)) != null) {
+					if (text != null) {
+						new Verse(chapter.id, range, text).insert(db);
+						text = null;
+					}
 					chapter = new Chapter(title).insert(db);
 					continue;
 				}

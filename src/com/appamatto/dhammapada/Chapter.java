@@ -2,6 +2,7 @@ package com.appamatto.dhammapada;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 public class Chapter {
@@ -18,7 +19,10 @@ public class Chapter {
 	}
 
 	public Chapter(Cursor cursor) {
-		this(cursor.getLong(0), cursor.getString(1));
+		ContentValues cvs = new ContentValues();
+		DatabaseUtils.cursorRowToContentValues(cursor, cvs);
+		this.id = cvs.getAsLong("_id");
+		this.title = cvs.getAsString("title");
 	}
 
 	public Chapter insert(SQLiteDatabase db) {
