@@ -24,6 +24,7 @@ public class ReadingActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		setTitle("Dhammapada: Reading");
 
 		db = new DBHelper(this).getReadableDatabase();
 		versesCursor = db.rawQuery("SELECT * FROM verses ORDER BY chapter_id",
@@ -89,6 +90,19 @@ public class ReadingActivity extends Activity {
 		if (item.getItemId() == R.id.favorites) {
 			Intent intent = new Intent(this, FavoritesActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+		}
+		if (item.getItemId() == R.id.legal) {
+			Intent intent = new Intent(this, LegalActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			startActivity(intent);
+		}
+		if (item.getItemId() == R.id.feedback) {
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("plain/text");
+			intent.putExtra(Intent.EXTRA_EMAIL,
+					new String[] { "dhammapada@appamatto.com" });
+			intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
 			startActivity(intent);
 		}
 		return true;

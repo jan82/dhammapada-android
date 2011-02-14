@@ -23,6 +23,7 @@ public class FavoritesActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		setTitle("Dhammapada: Favorites");
 
 		db = new DBHelper(this).getReadableDatabase();
 		versesCursor = db
@@ -74,6 +75,19 @@ public class FavoritesActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.reader) {
 			finish();
+		}
+		if (item.getItemId() == R.id.legal) {
+			Intent intent = new Intent(this, LegalActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			startActivity(intent);
+		}
+		if (item.getItemId() == R.id.feedback) {
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("plain/text");
+			intent.putExtra(Intent.EXTRA_EMAIL,
+					new String[] { "dhammapada@appamatto.com" });
+			intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
+			startActivity(intent);
 		}
 		return true;
 	}
