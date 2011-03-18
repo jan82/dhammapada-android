@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DhpListView" parent="@android:style/Widget.ListView">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:divider">@drawable/divider</item>
+        <item name="android:dividerHeight">5dp</item>
+        <item name="android:background">#000000</item>
+        <item name="android:cacheColorHint">#000000</item>
+        <item name="android:listSelector">@drawable/focused</item>
+        <item name="android:drawSelectorOnTop">true</item>
+    </style>
+</resources>
