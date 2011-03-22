@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#000000">
+    style="@style/DhpListItem">
     <TextView
         android:id="@+id/verse_range"
+        style="@style/DhpVerseRange"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textSize="18dp"
-        android:textColor="#a0a0a0"
-        android:textStyle="italic"
         android:padding="10dp"
-        android:typeface="serif"
         android:layout_gravity="center_vertical"/>
     <TextView
         android:id="@+id/verse_text"
+        style="@style/DhpVerse"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:typeface="serif"
-        android:textSize="14dp"
         android:paddingRight="10dp"
         android:layout_gravity="center_vertical"/>
 </merge>

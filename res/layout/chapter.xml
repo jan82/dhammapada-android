@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#000000">
+    style="@style/DhpListItem">
     <TextView
         android:id="@+id/chapter_title"
+        style="@style/DhpVerse"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:textSize="18dp"
-        android:textColor="#ffffff"
-        android:padding="10dp"
-        android:typeface="serif"/>
+        android:padding="10dp"/>
 </merge>

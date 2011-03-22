@@ -10,4 +10,27 @@
         <item name="android:listSelector">@drawable/focused</item>
         <item name="android:drawSelectorOnTop">true</item>
     </style>
+    <style name="DhpVerse" parent="@android:style/Widget.TextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="DhpVerseRange" parent="@android:style/Widget.TextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">#a0a0a0</item>
+    </style>
+    <style name="DhpListItem">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#000000</item>
+    </style>
+    <style name="DhpMarker">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ribbon_vertical</item>
+    </style>
 </resources>
