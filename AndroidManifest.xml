@@ -10,10 +10,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FavoritesActivity">
-        </activity>
-        <activity android:name=".LegalActivity">
-        </activity>
+        <activity android:name=".FavoritesActivity"/>
+        <activity android:name=".LegalActivity"/>
+        <activity android:name=".StyleEditor"/>
     </application>
     <uses-sdk android:minSdkVersion="3" />
 </manifest> 

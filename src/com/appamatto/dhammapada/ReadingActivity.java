@@ -19,7 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class ReadingActivity extends Activity {
+public class ReadingActivity extends DhammapadaActivity {
     private SQLiteDatabase db;
     private ListView verses;
     Cursor versesCursor;
@@ -79,38 +79,15 @@ public class ReadingActivity extends Activity {
     }
 
     @Override
+    protected int[] getDisabledMenuItems() {
+        return new int[] { R.id.reader };
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
         versesCursor.requery();
         chaptersCursor.requery();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.main, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.favorites) {
-            Intent intent = new Intent(this, FavoritesActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
-        if (item.getItemId() == R.id.legal) {
-            Intent intent = new Intent(this, LegalActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
-        }
-        if (item.getItemId() == R.id.feedback) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("plain/text");
-            intent.putExtra(Intent.EXTRA_EMAIL,
-                    new String[] { "dhammapada@appamatto.com" });
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
-            startActivity(intent);
-        }
-        return true;
     }
 
     @Override
