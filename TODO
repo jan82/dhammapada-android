@@ -17,11 +17,27 @@ brush stroke font, on light background with pond/leaves
 
 style editor:
 
+bool - checkbox
+---
 titles/no-titles
-text-size
+
+spinner
+---
+font
+
+color - 3 sliders plus hex input
+---
 text-color
 background-color
-font
-bookmark-icon
+hilight-text-color
+hilight-background-color
 
-edit-overlay
+slider
+---
+text-size
+
+crud styles ?
+
+later
+---
+bookmark-icon

@@ -10,13 +10,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "dhp";
-    private static final int DB_VERSION = 10;
+    private static final int DB_VERSION = 11;
     private static final String DHP_FILE = "dhp.txt";
+
+    /* DB HISTORY
+     *
+     * 10 - first release
+     * 11 - separated mutable content from immutable content (bookmarks)
+     */
 
     private Context context;
 
@@ -26,8 +33,13 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void createTables(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE chapters (_id INTEGER PRIMARY KEY AUTOINCREMENT, title)");
-        db.execSQL("CREATE TABLE verses (_id INTEGER PRIMARY KEY AUTOINCREMENT, chapter_id, chapter_offset, first, last, text, bookmarked)");
+        db.execSQL("CREATE TABLE chapters " +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, title)");
+        db.execSQL("CREATE TABLE verses " +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "chapter_id, chapter_offset, first, last, text)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS bookmarks " +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, verse, bookmarked)");
     }
 
     public VerseRange parseRange(String line) {
@@ -68,6 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return line.substring(1);
     }
 
+    @Override
     public void onCreate(SQLiteDatabase db) {
         try {
             createTables(db);
@@ -116,6 +129,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion <= 10) {
+            /* copy bookmark data into bookmarks table */
+            db.execSQL("CREATE TABLE bookmarks (_id INTEGER PRIMARY KEY AUTOINCREMENT, verse, bookmarked)");
+            Cursor bookmarked = db.rawQuery("SELECT * FROM verses WHERE bookmarked = 1", null);
+            while (bookmarked.moveToNext()) {
+                Verse verse = new Verse(bookmarked);
+                verse.bookmark(db);
+            }
+            bookmarked.close();
+        }
         db.execSQL("DROP TABLE IF EXISTS chapters");
         db.execSQL("DROP TABLE IF EXISTS verses");
         onCreate(db);

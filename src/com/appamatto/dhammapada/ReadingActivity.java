@@ -31,8 +31,10 @@ public class ReadingActivity extends DhammapadaActivity {
         setContentView(R.layout.main);
         setTitle("Dhammapada: Reading");
 
-        db = new DBHelper(this).getReadableDatabase();
-        versesCursor = db.rawQuery("SELECT * FROM verses ORDER BY chapter_id",
+        db = new DBHelper(this).getWritableDatabase();
+        versesCursor = db.rawQuery("SELECT * FROM verses LEFT OUTER JOIN bookmarks " +
+                "ON bookmarks.verse >= verses.first AND bookmarks.verse <= verses.last " +
+                "GROUP BY verses._id ORDER BY chapter_id",
                 null);
         chaptersCursor = db
             .rawQuery(
@@ -69,9 +71,11 @@ public class ReadingActivity extends DhammapadaActivity {
                 HeadingAdapter adapter = (HeadingAdapter) verses.getAdapter();
                 if (!adapter.isGroup(position)) {
                     Verse verse = new Verse((Cursor) adapter.getItem(position));
-                    new Verse(verse.id, verse.chapter, verse.chapterOffset,
-                        verse.range, verse.text, !verse.bookmarked)
-                        .insert(db);
+                    if (verse.bookmarked) {
+                        verse.unbookmark(db);
+                    } else {
+                        verse.bookmark(db);
+                    }
                     members.getCursor().requery();
                 }
             }

@@ -41,7 +41,7 @@ public class Verse {
         this.range = new VerseRange(cvs.getAsInteger("first"),
                 cvs.getAsInteger("last"));
         this.text = cvs.getAsString("text");
-        this.bookmarked = cvs.getAsInteger("bookmarked") == 1;
+        this.bookmarked = cvs.getAsInteger("bookmarked") != null;
     }
 
     public long insert(SQLiteDatabase db) {
@@ -51,12 +51,25 @@ public class Verse {
         cvs.put("first", range.first);
         cvs.put("last", range.last);
         cvs.put("text", text);
-        cvs.put("bookmarked", bookmarked ? 1 : 0);
         if (id != null) {
             db.update("verses", cvs, "_id = ?", new String[] { id.toString() });
             return id;
         } else {
             return db.insert("verses", null, cvs);
         }
+    }
+    
+    public void unbookmark(SQLiteDatabase db) {
+        db.delete("bookmarks",
+                String.format("verse >= %d AND verse <= %d", range.first, range.last),
+                null);
+    }
+
+    public void bookmark(SQLiteDatabase db) {
+        unbookmark(db);
+        ContentValues cvs = new ContentValues();
+        cvs.put("verse", range.first);
+        cvs.put("bookmarked", 1);
+        db.insert("bookmarks", null, cvs);
     }
 }

@@ -30,17 +30,21 @@ public class FavoritesActivity extends Activity {
         setContentView(R.layout.main);
         setTitle("Dhammapada: Favorites");
 
-        db = new DBHelper(this).getReadableDatabase();
+        db = new DBHelper(this).getWritableDatabase();
         versesCursor = db
             .rawQuery(
-                    "SELECT * FROM verses WHERE bookmarked = 1 ORDER BY chapter_id",
+                    "SELECT * FROM verses, bookmarks " + 
+                    "WHERE verses.first <= bookmarks.verse AND verses.last >= bookmarks.verse " +
+                    "AND bookmarked = 1 " +
+                    "GROUP BY verses._id ORDER BY chapter_id",
                     null);
         chaptersCursor = db
             .rawQuery(
-                    "SELECT chapters._id as _id, chapters.title as title, count(*) as members "
-                    + "FROM verses, chapters "
-                    + "WHERE verses.chapter_id = chapters._id AND verses.bookmarked = 1 "
-                    + "GROUP BY verses.chapter_id ORDER BY chapters._id",
+                    "SELECT chapters._id as _id, chapters.title as title, count(*) as members " +
+                    "FROM verses, chapters, bookmarks " +
+                    "WHERE verses.first <= bookmarks.verse AND verses.last >= bookmarks.verse " +
+                    "AND verses.chapter_id = chapters._id AND bookmarked = 1 " +
+                    "GROUP BY verses.chapter_id ORDER BY chapters._id",
                     null);
         verses = (ListView) findViewById(R.id.verses_list);
         GroupsAdapter groups = new ChaptersAdapter(this, chaptersCursor);
