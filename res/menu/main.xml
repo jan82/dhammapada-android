@@ -6,8 +6,4 @@
         android:title="Favorites"/>
     <item android:id="@+id/settings"
         android:title="Settings"/>
-    <item android:id="@+id/legal"
-        android:title="Legal"/>
-    <item android:id="@+id/feedback"
-        android:title="Feedback"/>
 </menu>

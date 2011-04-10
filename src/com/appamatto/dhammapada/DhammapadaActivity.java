@@ -35,24 +35,9 @@ public abstract class DhammapadaActivity extends Activity {
                 startActivity(intent);
                 break;
             }
-            case R.id.legal: {
-                Intent intent = new Intent(this, LegalActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
-                break;
-            }
-            case R.id.feedback: {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("plain/text");
-                intent.putExtra(Intent.EXTRA_EMAIL,
-                        new String[] { "dhammapada@appamatto.com" });
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
-                startActivity(intent);
-                break;
-            }
             case R.id.settings: {
-                Intent intent = new Intent(this, StyleEditor.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             }

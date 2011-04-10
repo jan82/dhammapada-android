@@ -18,7 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class FavoritesActivity extends Activity {
+public class FavoritesActivity extends DhammapadaActivity {
     private SQLiteDatabase db;
     private ListView verses;
     Cursor versesCursor;
@@ -76,35 +76,14 @@ public class FavoritesActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.favorites, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.reader) {
-            finish();
-        }
-        if (item.getItemId() == R.id.legal) {
-            Intent intent = new Intent(this, LegalActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
-        }
-        if (item.getItemId() == R.id.feedback) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("plain/text");
-            intent.putExtra(Intent.EXTRA_EMAIL,
-                    new String[] { "dhammapada@appamatto.com" });
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
-            startActivity(intent);
-        }
-        return true;
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         db.close();
         db = null;
+    }
+
+    @Override
+    protected int[] getDisabledMenuItems() {
+        return new int[] { R.id.favorites };
     }
 }

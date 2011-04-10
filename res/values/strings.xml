@@ -2,4 +2,8 @@
 <resources>
     <string name="hello">Hello World, Verses!</string>
     <string name="app_name">Dhammapada</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="legal">Legal</string>
+    <string name="style">Style</string>
 </resources>

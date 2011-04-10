@@ -16,13 +16,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "dhp";
-    private static final int DB_VERSION = 11;
+    private static final int DB_VERSION = 12;
     private static final String DHP_FILE = "dhp.txt";
 
     /* DB HISTORY
      *
      * 10 - first release
      * 11 - separated mutable content from immutable content (bookmarks)
+     * 12 - added styles table
      */
 
     private Context context;
@@ -40,6 +41,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 "chapter_id, chapter_offset, first, last, text)");
         db.execSQL("CREATE TABLE IF NOT EXISTS bookmarks " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT, verse, bookmarked)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS styles " +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, builtin" +
+                "chapters, ribbon, font, text_size, text_color, bg_color, " +
+                "marked_text_color, marked_bg_color");
+    }
+
+    public void updateStyles(SQLiteDatabase db) {
+        /* insert/update styles */
     }
 
     public VerseRange parseRange(String line) {
@@ -84,6 +93,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             createTables(db);
+            updateStyles(db);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                         context.getAssets().open(DHP_FILE)));
             String line;
@@ -129,7 +139,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion <= 10) {
+        if (oldVersion < 11) {
             /* copy bookmark data into bookmarks table */
             db.execSQL("CREATE TABLE bookmarks (_id INTEGER PRIMARY KEY AUTOINCREMENT, verse, bookmarked)");
             Cursor bookmarked = db.rawQuery("SELECT * FROM verses WHERE bookmarked = 1", null);

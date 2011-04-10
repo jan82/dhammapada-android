@@ -11,6 +11,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FavoritesActivity"/>
+        <activity android:name=".SettingsActivity"/>
         <activity android:name=".LegalActivity"/>
         <activity android:name=".StyleEditor"/>
     </application>
