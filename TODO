@@ -1,7 +1,6 @@
 Features
 ---
 
-Styles
 Searching
 Send quotes via email
 	(including Access to Insight link)
@@ -15,28 +14,8 @@ brush stroke font, on light background with pond/leaves
 
 ---
 
-style editor:
-
-bool - checkbox
----
-titles/no-titles
-
-spinner
----
-font
-
-color - 3 sliders plus hex input
----
-text-color
-background-color
-hilight-text-color
-hilight-background-color
-
-slider
----
-text-size
-
-crud styles ?
+NEXT: style editor plan
+customize -> copy builtin or edit user-defined
 
 later
 ---

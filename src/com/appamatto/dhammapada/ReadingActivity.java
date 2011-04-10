@@ -22,8 +22,6 @@ import android.widget.ListView;
 public class ReadingActivity extends DhammapadaActivity {
     private SQLiteDatabase db;
     private ListView verses;
-    Cursor versesCursor;
-    Cursor chaptersCursor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,16 +30,18 @@ public class ReadingActivity extends DhammapadaActivity {
         setTitle("Dhammapada: Reading");
 
         db = new DBHelper(this).getWritableDatabase();
-        versesCursor = db.rawQuery("SELECT * FROM verses LEFT OUTER JOIN bookmarks " +
+        Cursor versesCursor = db.rawQuery("SELECT * FROM verses LEFT OUTER JOIN bookmarks " +
                 "ON bookmarks.verse >= verses.first AND bookmarks.verse <= verses.last " +
                 "GROUP BY verses._id ORDER BY chapter_id",
                 null);
-        chaptersCursor = db
+        startManagingCursor(versesCursor);
+        Cursor chaptersCursor = db
             .rawQuery(
                     "SELECT chapters._id as _id, chapters.title as title, count(*) as members "
                     + "FROM verses, chapters WHERE verses.chapter_id = chapters._id "
                     + "GROUP BY verses.chapter_id ORDER BY chapters._id",
                     null);
+        startManagingCursor(chaptersCursor);
         verses = (ListView) findViewById(R.id.verses_list);
         GroupsAdapter groups = new ChaptersAdapter(this, chaptersCursor);
         final VersesAdapter members = new VersesAdapter(this, versesCursor,
@@ -85,13 +85,6 @@ public class ReadingActivity extends DhammapadaActivity {
     @Override
     protected int[] getDisabledMenuItems() {
         return new int[] { R.id.reader };
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        versesCursor.requery();
-        chaptersCursor.requery();
     }
 
     @Override

@@ -13,6 +13,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
+import android.graphics.Typeface;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "dhp";
@@ -42,13 +44,27 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS bookmarks " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT, verse, bookmarked)");
         db.execSQL("CREATE TABLE IF NOT EXISTS styles " +
-                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, builtin" +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, name, builtin, " +
                 "chapters, ribbon, font, text_size, text_color, bg_color, " +
-                "marked_text_color, marked_bg_color");
+                "marked_text_color, marked_bg_color)");
     }
 
     public void updateStyles(SQLiteDatabase db) {
         /* insert/update styles */
+        Style style = Style.getBuiltIn(db, "saffron");
+        if (style == null) {
+            Style.Builder builder = Style.Builder.empty(true);
+            builder.name = "saffron";
+            builder.chapters = true;
+            builder.ribbon = true;
+            builder.font = Typeface.SERIF;
+            builder.textSize = 20;
+            builder.text = Color.WHITE;
+            builder.background = Color.BLACK;
+            builder.markedText = Color.BLACK;
+            builder.markedBackground = Color.WHITE;
+            builder.build(db);
+        }
     }
 
     public VerseRange parseRange(String line) {

@@ -38,7 +38,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">25dp</item>
         <item name="android:padding">20dp</item>
-        <item name="android:gravity">left</item>
+        <item name="android:gravity">left|center_vertical</item>
         <item name="android:clickable">true</item>
+    </style>
+    <style name="GradientDivider">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@drawable/gradient_divider</item>
     </style>
 </resources>

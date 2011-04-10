@@ -15,8 +15,16 @@
             android:id="@+id/styles"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="wrap_content"/>
+        <Button
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="editClicked"
+            android:text="@string/edit"/>
     </LinearLayout>
     <include layout="@layout/divider"/>
     <TextView
