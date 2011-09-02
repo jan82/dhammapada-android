@@ -10,6 +10,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChaptersActivity"/>
         <activity android:name=".FavoritesActivity"/>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".LegalActivity"/>

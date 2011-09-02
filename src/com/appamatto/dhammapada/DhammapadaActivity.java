@@ -29,6 +29,12 @@ public abstract class DhammapadaActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.chapters: {
+                Intent intent = new Intent(this, ChaptersActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            }
             case R.id.favorites: {
                 Intent intent = new Intent(this, FavoritesActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

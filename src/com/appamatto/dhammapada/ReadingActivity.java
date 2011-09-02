@@ -50,14 +50,27 @@ public class ReadingActivity extends DhammapadaActivity {
         verses.setAdapter(headingAdapter);
 
         long verseId = getIntent().getLongExtra("verse_id", -1);
-        if (verseId == -1) {
+        long chId = getIntent().getLongExtra("chapter_id", -1);
+        if (verseId == -1 && chId == -1) {
             SharedPreferences prefs = getSharedPreferences("Browser",
                     MODE_PRIVATE);
             int position = prefs.getInt("progress", 0);
             verses.setSelection(position);
-        } else {
+        } else if (verseId != -1) {
             Cursor cursor = db.rawQuery("SELECT * FROM verses WHERE _id = "
                     + verseId, null);
+            cursor.moveToFirst();
+            Verse verse = new Verse(cursor);
+            cursor.close();
+            verses.setSelection(headingAdapter.getFlatPosition(
+                        (int) (verse.chapter - 1), verse.chapterOffset));
+        } else {
+            Cursor cursor = db.rawQuery(
+                "SELECT * FROM verses, chapters " +
+                "WHERE chapter_id = " + chId +
+                " ORDER BY _id LIMIT 1", 
+                null
+            );
             cursor.moveToFirst();
             Verse verse = new Verse(cursor);
             cursor.close();
