@@ -1,8 +1,9 @@
 /*
- * 2011 February 14
+ * 2011 September 2
  * 
  * The author disclaims copyright to this source code.
  */
+
 package com.appamatto.dhammapada;
 
 import android.content.Context;
@@ -19,7 +20,9 @@ public class ChapterHeading extends FrameLayout {
         title = (TextView) findViewById(R.id.chapter_title);
     }
 
-    public void setChapter(Chapter chapter) {
+    public void setChapter(Chapter chapter, Style currentStyle) {
         title.setText(chapter.title);
+        title.setTextSize(currentStyle.textSize);
+        title.setTypeface(currentStyle.font);
     }
 }

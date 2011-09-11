@@ -1,5 +1,5 @@
 /*
- * 2011 February 14
+ * 2011 September 2
  * 
  * The author disclaims copyright to this source code.
  */
@@ -10,13 +10,17 @@ import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 
 public class VersesAdapter extends CursorAdapter implements MembersAdapter {
     private boolean fullView;
-
-    public VersesAdapter(Context context, Cursor cursor, boolean fullView) {
+    private Style currentStyle;
+    
+    public VersesAdapter(Context context, Cursor cursor, boolean fullView, Style currentStyle) {
         super(context, cursor);
         this.fullView = fullView;
+        this.currentStyle = currentStyle;
     }
 
     @Override
@@ -30,7 +34,8 @@ public class VersesAdapter extends CursorAdapter implements MembersAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         VerseView verseView = (VerseView) view;
-        verseView.setVerse(new Verse(cursor));
+
+        verseView.setVerse(new Verse(cursor),currentStyle);
     }
 
     @Override

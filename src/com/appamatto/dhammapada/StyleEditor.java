@@ -1,5 +1,5 @@
 /*
- * 2011 April 5
+ * 2011 September 2
  *
  * The author disclaims copyright to this source code.
  */

@@ -1,17 +1,19 @@
 /*
- * 2011 April 5
+ * 2011 September 2
  *
  * The author disclaims copyright to this source code.
  */
+
 package com.appamatto.dhammapada;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public abstract class DhammapadaActivity extends Activity {
+
     protected int[] getDisabledMenuItems() {
         return new int[0];
     }

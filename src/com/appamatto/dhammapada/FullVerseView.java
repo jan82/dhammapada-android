@@ -1,5 +1,5 @@
 /*
- * 2011 February 14
+ * 2011 September 2
  * 
  * The author disclaims copyright to this source code.
  */
@@ -40,13 +40,16 @@ public class FullVerseView extends FrameLayout implements VerseView {
         }
     }
 
-    public void setVerse(Verse verse) {
+    public void setVerse(Verse verse, Style currentStyle) {
         if (verse.range.first == verse.range.last) {
             verseRange.setText("" + verse.range.first);
         } else {
             verseRange.setText("" + verse.range.first + "-" + verse.range.last);
         }
         verseText.setText(verse.text);
+        verseText.setTextSize(currentStyle.textSize);
+        verseText.setTypeface(currentStyle.font);
+
         setBookmarked(verse.bookmarked);
     }
 }

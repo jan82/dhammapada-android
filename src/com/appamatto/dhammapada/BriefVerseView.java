@@ -1,8 +1,9 @@
 /*
- * 2011 February 14
+ * 2011 September 2
  * 
  * The author disclaims copyright to this source code.
  */
+
 package com.appamatto.dhammapada;
 
 import android.content.Context;
@@ -27,7 +28,7 @@ public class BriefVerseView extends LinearLayout implements VerseView {
             verseRange.setTextColor(0xff000000);
             verseText.setTextColor(0xff000000);
             setBackgroundDrawable(getContext().getResources().getDrawable(
-                        R.drawable.bookmarked));
+                    R.drawable.bookmarked));
         } else {
             verseRange.setTextColor(0xff808080);
             verseText.setTextColor(0xffffffff);
@@ -35,7 +36,8 @@ public class BriefVerseView extends LinearLayout implements VerseView {
         }
     }
 
-    public void setVerse(Verse verse) {
+    @Override
+    public void setVerse(Verse verse, Style currentStyle) {
         if (verse.range.first == verse.range.last) {
             verseRange.setText("" + verse.range.first);
         } else {
@@ -51,6 +53,8 @@ public class BriefVerseView extends LinearLayout implements VerseView {
         }
         brief.append(" ...");
         verseText.setText(brief.toString());
+        verseText.setTextSize(currentStyle.textSize);
+        verseText.setTypeface(currentStyle.font);
         setBookmarked(verse.bookmarked);
     }
 }

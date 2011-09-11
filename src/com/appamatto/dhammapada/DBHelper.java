@@ -1,31 +1,29 @@
 /*
- * 2011 February 14
+ * 2011 September 2
  * 
  * The author disclaims copyright to this source code.
  */
-package com.appamatto.dhammapada;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+package com.appamatto.dhammapada;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.graphics.Typeface;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "dhp";
     private static final int DB_VERSION = 12;
     private static final String DHP_FILE = "dhp.txt";
 
-    /* DB HISTORY
-     *
-     * 10 - first release
-     * 11 - separated mutable content from immutable content (bookmarks)
-     * 12 - added styles table
+    /*
+     * DB HISTORY 10 - first release 11 - separated mutable content from
+     * immutable content (bookmarks) 12 - added styles table
      */
 
     private Context context;
@@ -45,20 +43,88 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT, verse, bookmarked)");
         db.execSQL("CREATE TABLE IF NOT EXISTS styles " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT, name, builtin, " +
-                "chapters, ribbon, font, text_size, text_color, bg_color, " +
+                "chapters, ribbon, serif, text_size, text_color, bg_color, " +
                 "marked_text_color, marked_bg_color)");
     }
 
     public void updateStyles(SQLiteDatabase db) {
         /* insert/update styles */
-        Style style = Style.getBuiltIn(db, "saffron");
+        Style style = Style.getBuiltIn(db, "sans");
         if (style == null) {
             Style.Builder builder = Style.Builder.empty(true);
-            builder.name = "saffron";
-            builder.chapters = true;
-            builder.ribbon = true;
-            builder.font = Typeface.SERIF;
+
+            // sans
+
+            builder.name = "sans";
+            builder.chapters = 1;
+            builder.ribbon = 1;
+            builder.serif = 0;
             builder.textSize = 20;
+            builder.text = Color.WHITE;
+            builder.background = Color.BLACK;
+            builder.markedText = Color.BLACK;
+            builder.markedBackground = Color.WHITE;
+            builder.build(db);
+
+            // large
+
+            builder.name = "sans large";
+            builder.chapters = 1;
+            builder.ribbon = 1;
+            builder.serif = 0;
+            builder.textSize = 25;
+            builder.text = Color.WHITE;
+            builder.background = Color.BLACK;
+            builder.markedText = Color.BLACK;
+            builder.markedBackground = Color.WHITE;
+            builder.build(db);
+
+            // small
+
+            builder.name = "sans small";
+            builder.chapters = 1;
+            builder.ribbon = 1;
+            builder.serif = 0;
+            builder.textSize = 15;
+            builder.text = Color.WHITE;
+            builder.background = Color.BLACK;
+            builder.markedText = Color.BLACK;
+            builder.markedBackground = Color.WHITE;
+            builder.build(db);
+
+            // serif
+
+            builder.name = "serif";
+            builder.chapters = 1;
+            builder.ribbon = 1;
+            builder.serif = 1;
+            builder.textSize = 20;
+            builder.text = Color.WHITE;
+            builder.background = Color.BLACK;
+            builder.markedText = Color.BLACK;
+            builder.markedBackground = Color.WHITE;
+            builder.build(db);
+
+            // large
+
+            builder.name = "serif large";
+            builder.chapters = 1;
+            builder.ribbon = 1;
+            builder.serif = 1;
+            builder.textSize = 25;
+            builder.text = Color.WHITE;
+            builder.background = Color.BLACK;
+            builder.markedText = Color.BLACK;
+            builder.markedBackground = Color.WHITE;
+            builder.build(db);
+
+            // small
+
+            builder.name = "serif small";
+            builder.chapters = 1;
+            builder.ribbon = 1;
+            builder.serif = 1;
+            builder.textSize = 15;
             builder.text = Color.WHITE;
             builder.background = Color.BLACK;
             builder.markedText = Color.BLACK;
@@ -74,7 +140,7 @@ public class DBHelper extends SQLiteOpenHelper {
         int start = 1, end;
         for (end = start; end < line.length()
                 && Character.isDigit(line.charAt(end)); end++) {
-                }
+        }
         String toParse = line.substring(start, end);
         int first, last;
         try {
@@ -88,7 +154,7 @@ public class DBHelper extends SQLiteOpenHelper {
         start = end + 1;
         for (end = start; end < line.length()
                 && Character.isDigit(line.charAt(end)); end++) {
-                }
+        }
         toParse = line.substring(start, end);
         try {
             last = Integer.parseInt(toParse);
@@ -111,7 +177,7 @@ public class DBHelper extends SQLiteOpenHelper {
             createTables(db);
             updateStyles(db);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        context.getAssets().open(DHP_FILE)));
+                    context.getAssets().open(DHP_FILE)));
             String line;
             VerseRange range = null;
             Chapter chapter = null;
@@ -122,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 if ((title = parseChapter(line)) != null) {
                     if (text != null) {
                         new Verse(chapter.id, chapterOffset++, range, text)
-                            .insert(db);
+                                .insert(db);
                         text = null;
                     }
                     chapter = new Chapter(title).insert(db);
@@ -133,7 +199,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 if ((newRange = parseRange(line)) != null) {
                     if (text != null) {
                         new Verse(chapter.id, chapterOffset++, range, text)
-                            .insert(db);
+                                .insert(db);
                         text = null;
                     }
                     range = newRange;

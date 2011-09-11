@@ -1,5 +1,5 @@
 /*
- * 2011 April 9
+ * 2011 September 2
  *
  * The author disclaims copyright to this source code.
  */
@@ -15,8 +15,9 @@ public class Style {
     public final long id;
     public final String name;
     public final boolean builtIn;
-    public final boolean chapters;
-    public final boolean ribbon;
+    public final int chapters;
+    public final int ribbon;
+    public final int serif;
     public final Typeface font;
     public final int textSize; /* in dp */
     public final int text;
@@ -30,9 +31,10 @@ public class Style {
         id = cvs.getAsLong("_id");
         name = cvs.getAsString("name");
         builtIn = cvs.getAsBoolean("builtin");
-        chapters = cvs.getAsBoolean("chapters");
-        ribbon = cvs.getAsBoolean("ribbon");
-        font = cvs.getAsBoolean("font") ? Typeface.SERIF : Typeface.SANS_SERIF;
+        chapters = cvs.getAsInteger("chapters");
+        ribbon = cvs.getAsInteger("ribbon");
+        serif = cvs.getAsInteger("serif");
+        font = (serif == 1 ? Typeface.SERIF : Typeface.SANS_SERIF);
         textSize = cvs.getAsInteger("text_size");
         text = cvs.getAsInteger("text_color");
         background = cvs.getAsInteger("bg_color");
@@ -77,9 +79,9 @@ public class Style {
         public final Long id;
         public String name;
         public final boolean builtIn;
-        public boolean chapters;
-        public boolean ribbon;
-        public Typeface font;
+        public int chapters;
+        public int ribbon;
+        public int serif;
         public int textSize;
         public int text;
         public int background;
@@ -107,9 +109,9 @@ public class Style {
 
         private Builder init(Style style) {
             name = style.name;
-            chapters = style.chapters;
-            ribbon = style.ribbon;
-            font = style.font;
+            chapters = 0;
+            ribbon = 0;
+            serif = 0;
             textSize = style.textSize;
             text = style.text;
             background = style.background;
@@ -124,7 +126,7 @@ public class Style {
             cvs.put("builtIn", builtIn);
             cvs.put("chapters", chapters);
             cvs.put("ribbon", ribbon);
-            cvs.put("font", font == Typeface.SERIF);
+            cvs.put("serif", serif);
             cvs.put("text_size", textSize);
             cvs.put("text_color", text);
             cvs.put("bg_color", background);

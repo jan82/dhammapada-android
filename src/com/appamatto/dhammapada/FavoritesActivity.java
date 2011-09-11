@@ -1,5 +1,5 @@
 /*
- * 2011 February 14
+ * 2011 September 2
  * 
  * The author disclaims copyright to this source code.
  */
@@ -17,20 +17,28 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.content.SharedPreferences;
 
 public class FavoritesActivity extends DhammapadaActivity {
     private SQLiteDatabase db;
     private ListView verses;
+    private Bundle savedInstanceState;
     Cursor versesCursor;
     Cursor chaptersCursor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.main);
         setTitle("Dhammapada: Favorites");
 
         db = new DBHelper(this).getWritableDatabase();
+        SharedPreferences stylepref = getSharedPreferences("Style", MODE_PRIVATE);
+        long id = stylepref.getLong("id", 1);
+        
+        Style currentStyle = Style.get(db,id);
+
         versesCursor = db
             .rawQuery(
                     "SELECT * FROM verses, bookmarks " + 
@@ -47,9 +55,10 @@ public class FavoritesActivity extends DhammapadaActivity {
                     "GROUP BY verses.chapter_id ORDER BY chapters._id",
                     null);
         verses = (ListView) findViewById(R.id.verses_list);
-        GroupsAdapter groups = new ChaptersAdapter(this, chaptersCursor);
+
+        GroupsAdapter groups = new ChaptersAdapter(this, chaptersCursor, currentStyle);
         final VersesAdapter members = new VersesAdapter(this, versesCursor,
-                false);
+                false, currentStyle);
         HeadingAdapter headingAdapter = new HeadingAdapter(groups, members);
         verses.setAdapter(headingAdapter);
         verses.setOnItemClickListener(new OnItemClickListener() {
@@ -85,5 +94,10 @@ public class FavoritesActivity extends DhammapadaActivity {
     @Override
     protected int[] getDisabledMenuItems() {
         return new int[] { R.id.favorites };
+    }
+
+    @Override
+    protected void onResume() {
+        this.onCreate(savedInstanceState);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * 2011 February 14
+ * 2011 September 2
  * 
  * The author disclaims copyright to this source code.
  */
@@ -22,14 +22,21 @@ import android.widget.ListView;
 public class ReadingActivity extends DhammapadaActivity {
     private SQLiteDatabase db;
     private ListView verses;
-
+    private Bundle savedInstanceState;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        this.savedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         setTitle("Dhammapada: Reading");
 
         db = new DBHelper(this).getWritableDatabase();
+        SharedPreferences stylepref = getSharedPreferences("Style", MODE_PRIVATE);
+        long id = stylepref.getLong("id", 1);
+        
+        Style currentStyle = Style.get(db,id);
+        
         Cursor versesCursor = db.rawQuery("SELECT * FROM verses LEFT OUTER JOIN bookmarks " +
                 "ON bookmarks.verse >= verses.first AND bookmarks.verse <= verses.last " +
                 "GROUP BY verses._id ORDER BY chapter_id",
@@ -43,9 +50,9 @@ public class ReadingActivity extends DhammapadaActivity {
                     null);
         startManagingCursor(chaptersCursor);
         verses = (ListView) findViewById(R.id.verses_list);
-        GroupsAdapter groups = new ChaptersAdapter(this, chaptersCursor);
+        GroupsAdapter groups = new ChaptersAdapter(this, chaptersCursor, currentStyle);
         final VersesAdapter members = new VersesAdapter(this, versesCursor,
-                true);
+                true, currentStyle);
         HeadingAdapter headingAdapter = new HeadingAdapter(groups, members);
         verses.setAdapter(headingAdapter);
 
@@ -109,4 +116,10 @@ public class ReadingActivity extends DhammapadaActivity {
         db.close();
         db = null;
     }
+
+    @Override
+    protected void onResume() {
+        this.onCreate(savedInstanceState);
+    }
+
 }

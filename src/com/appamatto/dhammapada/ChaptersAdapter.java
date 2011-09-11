@@ -1,8 +1,9 @@
 /*
- * 2011 February 14
+ * 2011 September 2
  * 
  * The author disclaims copyright to this source code.
  */
+
 package com.appamatto.dhammapada;
 
 import android.content.ContentValues;
@@ -14,8 +15,12 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 
 public class ChaptersAdapter extends CursorAdapter implements GroupsAdapter {
-    public ChaptersAdapter(Context context, Cursor cursor) {
+
+    public Style currentStyle;
+
+    public ChaptersAdapter(Context context, Cursor cursor, Style currentStyle) {
         super(context, cursor);
+        this.currentStyle = currentStyle;
     }
 
     @Override
@@ -29,7 +34,7 @@ public class ChaptersAdapter extends CursorAdapter implements GroupsAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ((ChapterHeading) view).setChapter(new Chapter(cursor));
+        ((ChapterHeading) view).setChapter(new Chapter(cursor), currentStyle);
     }
 
     @Override

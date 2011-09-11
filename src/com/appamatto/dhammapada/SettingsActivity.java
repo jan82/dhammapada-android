@@ -1,5 +1,5 @@
 /*
- * 2011 April 9
+ * 2011 September 2
  *
  * The author disclaims copyright to this source code.
  */
@@ -49,6 +49,18 @@ public class SettingsActivity extends DhammapadaActivity {
             }
         });
         styles.setAdapter(adapter);
+        
+        SharedPreferences stylepref = getSharedPreferences("Style", MODE_PRIVATE);
+        long rowid = stylepref.getLong("id", 1);
+        
+        for (int i = 0; i < styles.getCount(); i++) {
+            Cursor value = (Cursor) styles.getItemAtPosition(i);
+            startManagingCursor(cursor);
+            long id = value.getLong(value.getColumnIndex("_id"));
+            if (id == rowid) {
+                styles.setSelection(i);
+            }
+        }
     }
 
     @Override
@@ -74,7 +86,7 @@ public class SettingsActivity extends DhammapadaActivity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_EMAIL,
-                new String[] { "dhammapada@appamatto.com" });
+                new String[] { "yuttadhammo@gmail.com" });
         intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
         startActivity(intent);
     }
