@@ -31,7 +31,7 @@ public class FavoritesActivity extends DhammapadaActivity {
         super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.main);
-        setTitle("Dhammapada: Favorites");
+        setTitle("Dhammapada Reader: Favorites");
 
         db = new DBHelper(this).getWritableDatabase();
         SharedPreferences stylepref = getSharedPreferences("Style", MODE_PRIVATE);
@@ -41,7 +41,7 @@ public class FavoritesActivity extends DhammapadaActivity {
 
         versesCursor = db
             .rawQuery(
-                    "SELECT * FROM verses, bookmarks " + 
+                    "SELECT verses.* FROM verses, bookmarks " + 
                     "WHERE verses.first <= bookmarks.verse AND verses.last >= bookmarks.verse " +
                     "AND bookmarked = 1 " +
                     "GROUP BY verses._id ORDER BY chapter_id",
@@ -67,6 +67,7 @@ public class FavoritesActivity extends DhammapadaActivity {
                 int position, long id) {
                 HeadingAdapter adapter = (HeadingAdapter) verses.getAdapter();
                 if (!adapter.isGroup(position)) {
+                    
                     Verse verse = new Verse((Cursor) adapter.getItem(position));
                     Intent intent = new Intent(FavoritesActivity.this,
                         ReadingActivity.class);

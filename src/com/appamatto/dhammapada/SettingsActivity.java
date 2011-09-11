@@ -25,7 +25,7 @@ public class SettingsActivity extends DhammapadaActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
-        setTitle("Dhammapada: Settings");
+        setTitle("Dhammapada Reader: Settings");
         styles = (Spinner) findViewById(R.id.styles);
         db = new DBHelper(this).getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT _id, name FROM styles", null);
@@ -75,11 +75,9 @@ public class SettingsActivity extends DhammapadaActivity {
     }
 
     public void aboutClicked(View v) {
-        /*
         Intent intent = new Intent(this, AboutActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIIVITY_NO_HISTORY);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
-        */
     }
 
     public void feedbackClicked(View v) {

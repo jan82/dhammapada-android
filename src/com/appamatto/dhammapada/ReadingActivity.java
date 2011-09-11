@@ -29,7 +29,7 @@ public class ReadingActivity extends DhammapadaActivity {
         this.savedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        setTitle("Dhammapada: Reading");
+        setTitle("Dhammapada Reader: Reading");
 
         db = new DBHelper(this).getWritableDatabase();
         SharedPreferences stylepref = getSharedPreferences("Style", MODE_PRIVATE);

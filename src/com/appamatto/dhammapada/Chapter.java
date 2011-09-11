@@ -3,7 +3,6 @@
  * 
  * The author disclaims copyright to this source code.
  */
-
 package com.appamatto.dhammapada;
 
 import android.content.ContentValues;
@@ -36,9 +35,7 @@ public class Chapter {
         cvs.put("title", title);
         if (id != null) {
             db.update("chapters", cvs, "_id = ?",
-                    new String[] {
-                        id.toString()
-                    });
+                    new String[] { id.toString() });
             return this;
         } else {
             return new Chapter(db.insert("chapters", null, cvs), title);

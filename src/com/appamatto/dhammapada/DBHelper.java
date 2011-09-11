@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "dhp";
     private static final int DB_VERSION = 12;
-    private static final String DHP_FILE = "dhp.txt";
+    private static final String DHP_FILE = "bhuddharakkhita.txt";
 
     /*
      * DB HISTORY 10 - first release 11 - separated mutable content from
@@ -49,13 +49,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void updateStyles(SQLiteDatabase db) {
         /* insert/update styles */
-        Style style = Style.getBuiltIn(db, "sans");
+        Style style = Style.getBuiltIn(db, "medium");
         if (style == null) {
             Style.Builder builder = Style.Builder.empty(true);
 
             // sans
 
-            builder.name = "sans";
+            builder.name = "medium";
             builder.chapters = 1;
             builder.ribbon = 1;
             builder.serif = 0;
@@ -68,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             // large
 
-            builder.name = "sans large";
+            builder.name = "large";
             builder.chapters = 1;
             builder.ribbon = 1;
             builder.serif = 0;
@@ -81,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             // small
 
-            builder.name = "sans small";
+            builder.name = "small";
             builder.chapters = 1;
             builder.ribbon = 1;
             builder.serif = 0;
@@ -92,44 +92,6 @@ public class DBHelper extends SQLiteOpenHelper {
             builder.markedBackground = Color.WHITE;
             builder.build(db);
 
-            // serif
-
-            builder.name = "serif";
-            builder.chapters = 1;
-            builder.ribbon = 1;
-            builder.serif = 1;
-            builder.textSize = 20;
-            builder.text = Color.WHITE;
-            builder.background = Color.BLACK;
-            builder.markedText = Color.BLACK;
-            builder.markedBackground = Color.WHITE;
-            builder.build(db);
-
-            // large
-
-            builder.name = "serif large";
-            builder.chapters = 1;
-            builder.ribbon = 1;
-            builder.serif = 1;
-            builder.textSize = 25;
-            builder.text = Color.WHITE;
-            builder.background = Color.BLACK;
-            builder.markedText = Color.BLACK;
-            builder.markedBackground = Color.WHITE;
-            builder.build(db);
-
-            // small
-
-            builder.name = "serif small";
-            builder.chapters = 1;
-            builder.ribbon = 1;
-            builder.serif = 1;
-            builder.textSize = 15;
-            builder.text = Color.WHITE;
-            builder.background = Color.BLACK;
-            builder.markedText = Color.BLACK;
-            builder.markedBackground = Color.WHITE;
-            builder.build(db);
         }
     }
 

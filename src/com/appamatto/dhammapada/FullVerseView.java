@@ -11,14 +11,18 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.lang.Math;
+import android.graphics.Typeface;
 
 public class FullVerseView extends FrameLayout implements VerseView {
     private TextView verseRange;
     private TextView verseText;
     private ImageView verseRibbon;
+    private Context context;
 
     public FullVerseView(Context context) {
         super(context);
+        this.context = context;
         LayoutInflater.from(context).inflate(R.layout.verse, this);
         verseRange = (TextView) findViewById(R.id.verse_range);
         verseText = (TextView) findViewById(R.id.verse_text);
@@ -41,14 +45,20 @@ public class FullVerseView extends FrameLayout implements VerseView {
     }
 
     public void setVerse(Verse verse, Style currentStyle) {
-        if (verse.range.first == verse.range.last) {
+       if (verse.range.first == verse.range.last) {
             verseRange.setText("" + verse.range.first);
         } else {
             verseRange.setText("" + verse.range.first + "-" + verse.range.last);
         }
+
+        Typeface verajja = Typeface.createFromAsset(context.getAssets(), "fonts/verajjan.ttf");
+
         verseText.setText(verse.text);
         verseText.setTextSize(currentStyle.textSize);
-        verseText.setTypeface(currentStyle.font);
+        verseText.setTypeface(verajja);
+        
+        verseRange.setTextSize(Math.round(currentStyle.textSize*1.1));
+        verseRange.setTypeface(verajja);
 
         setBookmarked(verse.bookmarked);
     }

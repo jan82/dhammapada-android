@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.yuttadhammo.dhammapada"
+      package="com.appamatto.dhammapada"
       android:versionCode="2"
       android:versionName="1.1">
     <application android:icon="@drawable/leaf" android:label="@string/app_name">
