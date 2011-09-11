@@ -3,6 +3,7 @@
  * 
  * The author disclaims copyright to this source code.
  */
+
 package com.appamatto.dhammapada;
 
 import android.content.Context;
@@ -10,13 +11,11 @@ import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 
 public class VersesAdapter extends CursorAdapter implements MembersAdapter {
     private boolean fullView;
     private Style currentStyle;
-    
+
     public VersesAdapter(Context context, Cursor cursor, boolean fullView, Style currentStyle) {
         super(context, cursor);
         this.fullView = fullView;
@@ -35,7 +34,7 @@ public class VersesAdapter extends CursorAdapter implements MembersAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         VerseView verseView = (VerseView) view;
 
-        verseView.setVerse(new Verse(cursor),currentStyle);
+        verseView.setVerse(new Verse(cursor), currentStyle);
     }
 
     @Override

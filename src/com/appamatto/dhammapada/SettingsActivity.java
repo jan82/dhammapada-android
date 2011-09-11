@@ -3,16 +3,15 @@
  *
  * The author disclaims copyright to this source code.
  */
+
 package com.appamatto.dhammapada;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -34,8 +33,12 @@ public class SettingsActivity extends DhammapadaActivity {
                 this,
                 android.R.layout.simple_spinner_item,
                 cursor,
-                new String[] { "name" },
-                new int[] { android.R.id.text1 });
+                new String[] {
+                        "name"
+                },
+                new int[] {
+                        android.R.id.text1
+                });
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         styles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -49,10 +52,10 @@ public class SettingsActivity extends DhammapadaActivity {
             }
         });
         styles.setAdapter(adapter);
-        
+
         SharedPreferences stylepref = getSharedPreferences("Style", MODE_PRIVATE);
         long rowid = stylepref.getLong("id", 1);
-        
+
         for (int i = 0; i < styles.getCount(); i++) {
             Cursor value = (Cursor) styles.getItemAtPosition(i);
             startManagingCursor(cursor);
@@ -65,13 +68,9 @@ public class SettingsActivity extends DhammapadaActivity {
 
     @Override
     protected int[] getDisabledMenuItems() {
-        return new int[] { R.id.settings };
-    }
-
-    public void editClicked(View v) {
-        Intent intent = new Intent(this, StyleEditor.class);
-        intent.putExtra("id", styles.getSelectedItemId());
-        startActivity(intent);
+        return new int[] {
+                R.id.settings
+        };
     }
 
     public void aboutClicked(View v) {
@@ -84,7 +83,9 @@ public class SettingsActivity extends DhammapadaActivity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_EMAIL,
-                new String[] { "yuttadhammo@gmail.com" });
+                new String[] {
+                    "yuttadhammo@gmail.com"
+                });
         intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
         startActivity(intent);
     }
