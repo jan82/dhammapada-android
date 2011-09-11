@@ -1,0 +1,14 @@
+The Dhammapada Reader is a simple application that allows you to read the verses of the Dhammapada, a set of ancient teachings said to have been uttered by the historic fully-enlightened Buddha.
+
+This version of the reader includes two translations:
+1) a combined version with both the Pali from the Myanmar Tipitaka and a translation by Ven. Buddharakkhita from India published by the Buddhist Publication Society
+2) a translation by Thanissaro Bhikkhu.
+
+This reader allows you to bookmark favorite verses and includes a clickable table of contents that allows quickly moving from chapter to chapter.
+
+The settings page currently gives the option to select between sans and serif font and three text sizes.
+
+This application was created by Matthew Willis and adapted by Ven. Yuttadhammo.  Both have waived all rights over the app's source code, and it is freely available on github for those who are interested:
+
+https://github.com/appamatto/dhammapada-android
+https://github.com/NoahY/dhammapada-android

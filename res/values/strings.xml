@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Verses!</string>
-    <string name="app_name">Dhammapada</string>
+    <string name="app_name">Dhammapada Reader</string>
     <string name="about">About</string>
     <string name="feedback">Feedback</string>
     <string name="legal">Legal</string>

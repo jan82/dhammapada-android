@@ -14,10 +14,20 @@ This application would not exist in many senses without the website "Access to I
 
 http://www.accesstoinsight.org
 
-The text of the Dhammapada contained in this application is NOT public domain.  It was translated by Thanissaro Bhikkhu and was made available by "Access to Insight" with the following license:
+The Thanissaro Bhikkhu translation of the Dhammapada contained in this application is NOT public domain.  It was made available by "Access to Insight" with the following license:
 
 Provenance: ©2005 John T. Bullitt. This anthology prepared by jtb for Access to Insight. This Access to Insight edition is ©2005–2011.
 
 Terms of use: You may copy, reformat, reprint, republish, and redistribute this work in any medium whatsoever, provided that: (1) you only make such copies, etc. available free of charge; (2) you clearly indicate that any derivatives of this work (including translations) are derived from this source document; and (3) you include the full text of this license in any copies or derivatives of this work. Otherwise, all rights reserved.	For additional information about this license, see the FAQ.
 
 http://www.accesstoinsight.org/tipitaka/kn/dhp/index.html
+
+The Acharya Buddharakkhita translation of the Dhammapada contained in this application was downloaded from the following link:
+
+http://www.buddhist-elibrary.org/library/download.php?aipath=114
+
+The text has been extracted from that file in accordance with the copyright found therein.
+
+The Verajja font was created by Bhante Pesala and is licensed under the GNU license:
+
+http://www.gnu.org/licenses/licenses.html
