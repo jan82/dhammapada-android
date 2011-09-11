@@ -13,12 +13,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
 public class SettingsActivity extends DhammapadaActivity {
     private SQLiteDatabase db;
     private Spinner styles;
+    private Spinner translations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class SettingsActivity extends DhammapadaActivity {
         setContentView(R.layout.settings);
         setTitle("Dhammapada Reader: Settings");
         styles = (Spinner) findViewById(R.id.styles);
+        translations = (Spinner) findViewById(R.id.translations);
         db = new DBHelper(this).getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT _id, name FROM styles", null);
         startManagingCursor(cursor);
@@ -64,6 +68,22 @@ public class SettingsActivity extends DhammapadaActivity {
                 styles.setSelection(i);
             }
         }
+
+        ArrayAdapter<?> translationsAdapter = new ArrayAdapter<Translation>(this,
+                android.R.layout.simple_spinner_item, Translation.translations);
+        translationsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        translations.setAdapter(translationsAdapter);
+        translations.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Translation.set(SettingsActivity.this, Translation.translations[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+        translations.setSelection(Translation.getIndex(this));
     }
 
     @Override
@@ -84,7 +104,7 @@ public class SettingsActivity extends DhammapadaActivity {
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_EMAIL,
                 new String[] {
-                    "yuttadhammo@gmail.com"
+                    "dhammapada@appamatto.com"
                 });
         intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
         startActivity(intent);

@@ -17,9 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "dhp";
     private static final int DB_VERSION = 12;
-    private static final String DHP_FILE = "bhuddharakkhita.txt";
 
     /*
      * DB HISTORY 10 - first release 11 - separated mutable content from
@@ -29,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private Context context;
 
     public DBHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, Translation.get(context).id, null, DB_VERSION);
         this.context = context;
     }
 
@@ -139,7 +137,7 @@ public class DBHelper extends SQLiteOpenHelper {
             createTables(db);
             updateStyles(db);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    context.getAssets().open(DHP_FILE)));
+                    context.getAssets().open(Translation.get(context).id + ".txt")));
             String line;
             VerseRange range = null;
             Chapter chapter = null;
