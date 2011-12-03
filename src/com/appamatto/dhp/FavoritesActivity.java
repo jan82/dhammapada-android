@@ -3,8 +3,7 @@
  * 
  * The author disclaims copyright to this source code.
  */
-
-package com.appamatto.dhammapada;
+package com.appamatto.dhp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

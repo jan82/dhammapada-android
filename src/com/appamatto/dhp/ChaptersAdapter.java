@@ -3,8 +3,7 @@
  * 
  * The author disclaims copyright to this source code.
  */
-
-package com.appamatto.dhammapada;
+package com.appamatto.dhp;
 
 import android.content.ContentValues;
 import android.content.Context;

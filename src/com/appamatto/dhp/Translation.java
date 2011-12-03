@@ -1,5 +1,9 @@
-
-package com.appamatto.dhammapada;
+/*
+ * 2011 September 11
+ *
+ * The author disclaims copyright to this source code.
+ */
+package com.appamatto.dhp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
