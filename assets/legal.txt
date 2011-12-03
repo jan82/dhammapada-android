@@ -1,6 +1,6 @@
 The source code for this application is available at:
 
-https://github.com/appamatto/dhammapada-android
+http://fossil.appamatto.com/dhp
 
 The source code to this project is public domain; the following notice is present in each source file:
 

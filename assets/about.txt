@@ -8,7 +8,7 @@ This reader allows you to bookmark favorite verses and includes a clickable tabl
 
 The settings page currently gives the option to select between sans and serif font and three text sizes.
 
-This application was created by Matthew Willis and adapted by Ven. Yuttadhammo.  Both have waived all rights over the app's source code, and it is freely available on github for those who are interested:
+This application was created by Matthew Willis and adapted by Ven. Yuttadhammo.  Both have waived all rights over the app's source code, and it is freely available online for those who are interested:
 
-https://github.com/appamatto/dhammapada-android
+http://fossil.appamatto.com/dhp
 https://github.com/NoahY/dhammapada-android

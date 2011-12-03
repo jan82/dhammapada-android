@@ -103,7 +103,7 @@ public class SettingsActivity extends DhammapadaActivity {
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_EMAIL,
                 new String[] {
-                    "dhammapada@appamatto.com"
+                    "appamatto@gmail.com"
                 });
         intent.putExtra(Intent.EXTRA_SUBJECT, "Dhammapada Android feedback");
         startActivity(intent);
